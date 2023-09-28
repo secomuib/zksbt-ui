@@ -99,7 +99,7 @@ export default function GenerateZKP (props: any) {
         content='Identity holder'
       />
       <Form className='attached fluid segment'>
-        <Button color='blue' onClick={readSBT} disabled={!props.tokenId}>
+        <Button color='blue' onClick={readSBT}>
           Read SBT (TokenId={props.tokenId})</Button>
 
         <Form.Input label='SBT owner' type='text' value={owner} readOnly error/>
