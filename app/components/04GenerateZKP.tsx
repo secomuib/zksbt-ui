@@ -62,16 +62,11 @@ export default function GenerateZKP (props: any) {
     // input of ZKP
     const input = {
       root: root,
-      owner: owner,
+      ownerAddress: owner,
       threshold: props.threshold,
-      operator: 4, // 4 = greater than or equal to
-      value: +creditScore,
-      data: [
-        owner,
-        +creditScore,
-        +income,
-        +reportDate
-      ]
+      creditScore: +creditScore,
+      income: +income,
+      reportDate: +reportDate
     };
 
     // generate ZKP proof
