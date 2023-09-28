@@ -69,8 +69,6 @@ export default function MintSBT (props: any) {
     setMinting(true);
     setError('');
     try {
-      console.log(await zkpsbt.name());
-      console.log(zkpsbt.address);
       const mintTx = await zkpsbt
       .mint(
         props.address,
@@ -79,7 +77,6 @@ export default function MintSBT (props: any) {
         encryptedIncome,
         encryptedReportDate
       );
-      console.log(11);
 
       const mintReceipt = await mintTx.wait();
       const tokenId = mintReceipt.events![0].args![1].toNumber();
