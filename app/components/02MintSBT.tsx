@@ -35,6 +35,14 @@ export default function MintSBT (props: any) {
   const [sbtAddress, setSbtAddress] = useState('');
   const [tokenId, setTokenId] = useState('');
 
+  const checkOdd = (n: string) => {
+    if (n.length % 2 == 0) {
+      return n;
+    } else {
+      return "0" + n;
+    }
+  }
+
   const encrypt = async () => {
     // middleware calculates root of the Merkle Tree's data
     const poseidon = await buildPoseidon();
@@ -44,7 +52,7 @@ export default function MintSBT (props: any) {
       BigInt(income),
       BigInt(new Date(reportDate).getTime())
     ]);
-    setRoot("0x" + BigInt(poseidon.F.toString(root)).toString(16));
+    setRoot("0x" + checkOdd(BigInt(poseidon.F.toString(root)).toString(16)));
 
     // middleware encrypts data with public key of address1
     const eCreditScore = await encryptWithPublicKey(
