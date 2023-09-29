@@ -12,7 +12,7 @@ export default function RequestZKP (props: any) {
     <div id="requestzkp" style={{ marginBottom: "20px"}}>
       <Message
         attached
-        icon='user'
+        icon='eye'
         color='blue'
         header='Request ZKP'
         content='Verifier'

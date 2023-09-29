@@ -105,7 +105,7 @@ export default function MintSBT (props: any) {
     <div id="mintsbt" style={{ marginBottom: "20px"}}>
       <Message
         attached
-        icon='user'
+        icon='university'
         color='yellow'
         header='Encrypt data & Mint SBT'
         content='Authority'

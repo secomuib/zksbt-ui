@@ -22,7 +22,7 @@ export default function VerifyZKP (props: any) {
     <div id="verifyzkp" style={{ marginBottom: "20px"}}>
       <Message
         attached
-        icon='user'
+        icon='eye'
         color='blue'
         header='Verify ZKP'
         content='Verifier'
