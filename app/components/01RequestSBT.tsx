@@ -54,7 +54,20 @@ export default function RequestSBT (props: any) {
       );
     setPublicKey(wallet.publicKey);
     setAddress(wallet.address);
-  }
+  };
+
+  const generatePrivateKey = () => {
+    const pKey = ethers.Wallet.createRandom().privateKey;
+    const wallet: Wallet = new ethers.Wallet(
+      pKey,
+      ethers.getDefaultProvider("goerli")
+      );
+    
+    setIdToken("");
+    setPrivateKey(pKey);
+    setPublicKey(wallet.publicKey);
+    setAddress(wallet.address);
+  };
 
   const getPrivateKey = async (provider: SafeEventEmitterProvider) => {
     return (await provider.request({
@@ -79,6 +92,7 @@ export default function RequestSBT (props: any) {
       />
       <Form className='attached fluid segment'>
         <Button color='blue' onClick={login}>Login</Button>
+        <Button color='blue' onClick={generatePrivateKey}>Generate Random Private Key</Button>
         <Form.Input label='Id token' type='text' value={idToken} readOnly error/>
         <Form.Input label='Private key' type='text' value={privateKey} readOnly error/>
         <Form.Input label='Public key' type='text' value={publicKey} readOnly error/>
