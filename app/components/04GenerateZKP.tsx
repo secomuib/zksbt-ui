@@ -31,6 +31,15 @@ export default function GenerateZKP (props: any) {
   const [proof, setProof] = useState('');
   const [publicSignals, setPublicSignals] = useState('');
 
+  const operatorOptions = [
+    { key: '0', value: '0', text: '==' },
+    { key: '1', value: '1', text: '!=' },
+    { key: '2', value: '2', text: '>' },
+    { key: '3', value: '3', text: '>=' },
+    { key: '4', value: '4', text: '<' },
+    { key: '5', value: '5', text: '<=' },
+  ];
+
   const readSBT = async () => {
     const owner = await zksbt.ownerOf(props.tokenId);
     setOwner(owner);
@@ -62,11 +71,16 @@ export default function GenerateZKP (props: any) {
     // input of ZKP
     const input = {
       root: root,
-      ownerAddress: owner,
+      owner: owner,
       threshold: props.threshold,
-      creditScore: +creditScore,
-      income: +income,
-      reportDate: +reportDate
+      operator: props.operator,
+      value: +creditScore,
+      data: [
+        owner,
+        +creditScore,
+        +income,
+        +reportDate
+      ]
     };
 
     // generate ZKP proof
@@ -114,8 +128,12 @@ export default function GenerateZKP (props: any) {
           onChange={(e) => setIncome(e.target.value)}/>
         <Form.Input label='Report date' type='number' value={reportDate}
           onChange={(e) => setReportDate(e.target.value)}/>
-        <Form.Input label='Threshold (>=)' type='text' value={props.threshold}
-          readOnly error/>
+        <Form.Group widths='equal'>
+          <Form.Select label='Operator' labeled options={operatorOptions} value={props.operator}
+            readOnly error/>
+          <Form.Input label='Threshold' type='text' value={props.threshold}
+            readOnly error/>
+        </Form.Group>
 
         <Button color='blue' onClick={generateZKP}>Generate ZKP</Button>
 

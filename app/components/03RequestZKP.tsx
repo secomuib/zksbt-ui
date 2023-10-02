@@ -3,9 +3,20 @@ import { Button, Form, Message } from 'semantic-ui-react';
 
 export default function RequestZKP (props: any) {
   const [threshold, setThreshold] = useState('');
+  const [operator, setOperator] = useState('3');
+
+  const operatorOptions = [
+    { key: '0', value: '0', text: '==' },
+    { key: '1', value: '1', text: '!=' },
+    { key: '2', value: '2', text: '>' },
+    { key: '3', value: '3', text: '>=' },
+    { key: '4', value: '4', text: '<' },
+    { key: '5', value: '5', text: '<=' },
+  ];
 
   const requestData = () => {
     props.setThreshold(threshold);
+    props.setOperator(operator);
   }
 
   return (  
@@ -18,8 +29,11 @@ export default function RequestZKP (props: any) {
         content='Verifier'
       />
       <Form className='attached fluid segment'>
-        <Form.Input label='Threshold (>=)' type='number'
-          onChange={(e) => setThreshold(e.target.value)}/>
+        <Form.Group widths='equal'>
+          <Form.Select label='Operator' options={operatorOptions} onChange={(e, data) => {setOperator(String(data.value))}}/>
+          <Form.Input label='Threshold' type='number'
+            onChange={(e) => setThreshold(e.target.value)}/>
+        </Form.Group>
         <Button color='blue' onClick={requestData}>Request</Button>
       </Form>
     </div>
