@@ -126,7 +126,7 @@ export default function MintSBT (props: any) {
           type='text' value={root} readOnly error/>
         <Form.Input label='Encrypted data (with publicKey)'
           type='text'
-          value={encryptedCreditScore?'['+JSON.stringify(encryptedCreditScore)+', '+JSON.stringify(encryptedIncome)+', '+JSON.stringify(encryptedReportDate)+']':''}
+          value={encryptedCreditScore.ciphertext?'['+JSON.stringify(encryptedCreditScore)+', '+JSON.stringify(encryptedIncome)+', '+JSON.stringify(encryptedReportDate)+']':''}
           readOnly error/>
         <Form.Input label='SBT smart contract address' type='text' value={sbtAddress} readOnly error/>
 
