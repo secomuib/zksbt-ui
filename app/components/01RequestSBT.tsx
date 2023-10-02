@@ -37,8 +37,6 @@ export default function RequestSBT (props: any) {
       throw new Error("web3authprovider not initialized yet");
     }
 
-    console.log(web3auth);
-
     if (!web3auth.provider) {
       throw new Error("web3authprovider not initialized yet");
     }
