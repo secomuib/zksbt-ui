@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import zkpSBTAddress from "../../web3/ZKPSBT.json";
+import zkSBTAddress from "../../web3/ZKSBT.json";
 import { Button, Form, Message } from 'semantic-ui-react';
-import zkpsbt from '@/web3/zkpsbt';
+import zksbt from '@/web3/zksbt';
 
 const { encryptWithPublicKey } = require("../../utils/crypto");
 const buildPoseidon = require("circomlibjs").buildPoseidon;
@@ -77,7 +77,7 @@ export default function MintSBT (props: any) {
     setMinting(true);
     setError('');
     try {
-      const mintTx = await zkpsbt
+      const mintTx = await zksbt
       .mint(
         props.address,
         root,
@@ -98,7 +98,7 @@ export default function MintSBT (props: any) {
   }
 
   useEffect(() => {
-    setSbtAddress(zkpSBTAddress.address);
+    setSbtAddress(zpSBTAddress.address);
   });
 
   return (

@@ -1,7 +1,7 @@
 'use client';
 
 import { Contract, providers } from 'ethers';
-import zkpSBTAddress from "../web3/ZKPSBT.json";
+import zkSBTAddress from "../web3/ZKSBT.json";
 
 declare var window: any;
 
@@ -20,6 +20,6 @@ if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
   );
 }
 
-const zkpsbt = new Contract(zkpSBTAddress.address, zkpSBTAddress.abi, signer);
+const zksbt = new Contract(zkSBTAddress.address, zkSBTAddress.abi, signer);
 
-export default zkpsbt;
+export default zksbt;

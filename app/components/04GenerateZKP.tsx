@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { decryptWithPrivateKey } from '../../utils/crypto';
 const { genProof } = require("../../utils/snarkjs");
 import { Button, Form, Message } from 'semantic-ui-react';
-import zkpsbt from '@/web3/zkpsbt';
+import zksbt from '@/web3/zksbt';
 
 export default function GenerateZKP (props: any) {
   const [creditScore, setCreditScore] = useState('');
@@ -32,10 +32,10 @@ export default function GenerateZKP (props: any) {
   const [publicSignals, setPublicSignals] = useState('');
 
   const readSBT = async () => {
-    const owner = await zkpsbt.ownerOf(props.tokenId);
+    const owner = await zksbt.ownerOf(props.tokenId);
     setOwner(owner);
 
-    const sbtData = await zkpsbt.sbtData(props.tokenId);
+    const sbtData = await zksbt.sbtData(props.tokenId);
     setRoot(sbtData.root);
     setEncryptedCreditScore(sbtData.encryptedCreditScore);
     setEncryptedIncome(sbtData.encryptedIncome);

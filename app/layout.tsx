@@ -5,7 +5,7 @@ import 'semantic-ui-css/semantic.min.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'ZKPSBT',
+  title: 'ZKSBT',
   description: 'Zero-Knowledge Proof Soulbound Token',
 }
 

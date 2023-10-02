@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <Segment inverted>
       <Menu inverted pointing secondary style={{ marginTop: '10px'}}>
-        <Menu.Item><Icon name='protect' size='big'/>ZKPSBT</Menu.Item>
+        <Menu.Item><Icon name='protect' size='big'/>ZKSBT</Menu.Item>
         <Menu.Menu position='right'>
           <Menu.Item href="#requestsbt">Request SBT</Menu.Item>
           <Menu.Item href="#mintsbt">Mint SBT</Menu.Item>
