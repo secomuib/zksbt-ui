@@ -116,7 +116,7 @@ export default function GenerateZKP (props: any) {
           type='text' value={root} readOnly error/>
         <Form.Input label='Encrypted data (with publicKey)'
           type='text'
-          value={'["'+encryptedCreditScore.ciphertext+'", "'+encryptedIncome.ciphertext+'", "'+encryptedReportDate.ciphertext+'"]'}
+          value={'['+JSON.stringify(encryptedCreditScore)+', '+JSON.stringify(encryptedIncome)+', '+JSON.stringify(encryptedReportDate)+']'}
           readOnly error/>
         <Form.Input label='Private key' type='text' value={props.privateKey} readOnly error/>
 
