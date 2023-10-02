@@ -98,7 +98,7 @@ export default function MintSBT (props: any) {
   }
 
   useEffect(() => {
-    setSbtAddress(zpSBTAddress.address);
+    setSbtAddress(zkSBTAddress.address);
   });
 
   return (
