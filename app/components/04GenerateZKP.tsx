@@ -129,6 +129,8 @@ export default function GenerateZKP (props: any) {
         <Form.Input label='Report date' type='number' value={reportDate}
           onChange={(e) => setReportDate(e.target.value)}/>
         <Form.Group widths='equal'>
+          <Form.Input label='Credit score' type='text' value={creditScore}
+            readOnly error/>
           <Form.Select label='Operator' labeled options={operatorOptions} value={props.operator}
             readOnly error/>
           <Form.Input label='Threshold' type='text' value={props.threshold}

@@ -38,6 +38,8 @@ export default function VerifyZKP (props: any) {
       />
       <Form className='attached fluid segment'>
         <Form.Group widths='equal'>
+          <Form.Input label='Credit score' type='text' value='?'
+            readOnly error/>
           <Form.Select label='Operator' labeled options={operatorOptions} value={props.operator}
             readOnly error/>
           <Form.Input label='Threshold' type='text' value={props.threshold}

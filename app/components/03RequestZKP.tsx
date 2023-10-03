@@ -30,6 +30,8 @@ export default function RequestZKP (props: any) {
       />
       <Form className='attached fluid segment'>
         <Form.Group widths='equal'>
+          <Form.Input label='Credit score' type='text' value='?'
+            readOnly error/>
           <Form.Select label='Operator' options={operatorOptions} onChange={(e, data) => {setOperator(String(data.value))}}/>
           <Form.Input label='Threshold' type='number'
             onChange={(e) => setThreshold(e.target.value)}/>
