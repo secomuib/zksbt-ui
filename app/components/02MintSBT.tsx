@@ -77,6 +77,9 @@ export default function MintSBT (props: any) {
     setMinting(true);
     setError('');
     try {
+      if ((await zksbt.provider.getNetwork()).chainId != 5) {
+        throw new Error("Please switch to Goerli testnet");
+      }
       const mintTx = await zksbt
       .mint(
         props.address,
