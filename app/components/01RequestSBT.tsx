@@ -7,6 +7,10 @@ import { CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
 import { Web3Auth } from "@web3auth/modal";
 
 export default function RequestSBT (props: any) {
+  const [
+    web3authIdentityHolder,
+    setWeb3authIdentityHolder
+  ] = useState<Web3Auth | null>(null);
   const [idToken, setIdToken] = useState('');
   const [privateKey, setPrivateKey] = useState('');
   const [publicKey, setPublicKey] = useState('');
@@ -43,6 +47,8 @@ export default function RequestSBT (props: any) {
     }
     const authenticateUser = await web3auth.authenticateUser();
 
+    setWeb3authIdentityHolder(web3auth);
+
     const pKey = await getPrivateKey(web3auth.provider);
     setIdToken(authenticateUser.idToken);
     setPrivateKey("0x"+pKey);
@@ -53,6 +59,17 @@ export default function RequestSBT (props: any) {
       );
     setPublicKey(wallet.publicKey);
     setAddress(wallet.address);
+  };
+
+  const logout = async () => {
+    if (!web3authIdentityHolder) {
+      throw new Error("web3auth not initialized yet");
+    }
+    await web3authIdentityHolder.logout();
+    setIdToken('');
+    setPrivateKey('');
+    setPublicKey('');
+    setAddress('');
   };
 
   const generatePrivateKey = () => {
@@ -91,6 +108,7 @@ export default function RequestSBT (props: any) {
       />
       <Form className='attached fluid segment'>
         <Button color='blue' onClick={login}>Login</Button>
+        <Button color='blue' onClick={logout}>Logout</Button>
         <Button color='blue' onClick={generatePrivateKey}>Generate Random Private Key</Button>
         <Form.Input label='Id token' type='text' value={idToken} readOnly error/>
         <Form.Input label='Private key' type='text' value={privateKey} readOnly error/>
