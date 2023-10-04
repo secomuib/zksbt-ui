@@ -14,7 +14,8 @@ export default function RequestSBT (props: any) {
 
   const login = async () => {
     const web3auth = new Web3Auth({
-      clientId: process.env.WEB3_AUTH_CLIENT_ID || "BB9-HFtHLnNBeMZhxvALkBrMqwJjuSZNTiE2gd9mwnUzrmqLGKXER07oE3WTcZkjlE4ZKw6lxEoE-Rx6QfoihI4",
+      clientId: process.env.WEB3_AUTH_CLIENT_ID || "BFsKtGfr5armoE_s_Vig-wzBeonn0DSsfO2w-qDdKV1T3Ac6tSuZovgKx0nnwMj4hdOc_38POMFqXVcT6e0n1lo",
+      // testnet: BB9-HFtHLnNBeMZhxvALkBrMqwJjuSZNTiE2gd9mwnUzrmqLGKXER07oE3WTcZkjlE4ZKw6lxEoE-Rx6QfoihI4
       web3AuthNetwork: "sapphire_mainnet",
       chainConfig: {
         chainNamespace: CHAIN_NAMESPACES.EIP155,
