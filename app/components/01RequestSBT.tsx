@@ -9,8 +9,8 @@ import { Presets } from "userop";
 
 export default function RequestSBT (props: any) {
   const [
-    web3authIdentityHolder,
-    setWeb3authIdentityHolder
+    web3auth,
+    setWeb3auth
   ] = useState<Web3Auth | null>(null);
   const [account, setAccount] = useState<Presets.Builder.SimpleAccount | null>(
     null
@@ -54,7 +54,7 @@ export default function RequestSBT (props: any) {
     }
     const authenticateUser = await web3auth.authenticateUser();
 
-    setWeb3authIdentityHolder(web3auth);
+    setWeb3auth(web3auth);
 
     const pKey = await getPrivateKey(web3auth.provider);
     const acc = await createAccount(pKey);
@@ -71,10 +71,10 @@ export default function RequestSBT (props: any) {
   };
 
   const logout = async () => {
-    if (!web3authIdentityHolder) {
+    if (!web3auth) {
       throw new Error("web3auth not initialized yet");
     }
-    await web3authIdentityHolder.logout();
+    await web3auth.logout();
     setIdToken('');
     setAccount(null);
     setPrivateKey('');
@@ -128,8 +128,8 @@ export default function RequestSBT (props: any) {
         content='Identity holder'
       />
       <Form className='attached fluid segment'>
-        <Button color='blue' onClick={login}>Login</Button>
-        <Button color='blue' onClick={logout}>Logout</Button>
+        <Button color='blue' onClick={login}>Login Identity Holder</Button>
+        <Button color='blue' onClick={logout}>Logout Identity Holder</Button>
         <Button color='blue' onClick={generatePrivateKey}>Generate Random Private Key</Button>
         <Form.Input label='Id token' type='text' value={idToken} readOnly error/>
         <Form.Input label='Private key' type='text' value={privateKey} readOnly error/>
