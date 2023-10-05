@@ -276,7 +276,7 @@ export default function MintSBT (props: any) {
         <Form.Input label='SBT smart contract address' type='text' value={sbtAddress} readOnly error/>
 
         <Button color='blue' onClick={login}>Login</Button>
-        <Button color='blue' onClick={logout}>Logout</Button>
+        <Button color='blue' onClick={logout} disabled={!web3auth || !web3auth.provider}>Logout</Button>
         
         <Form.Input label='Social login Id token' type='text' value={idToken} readOnly error/>
         <Form.Input label='Private key' type='text' value={privateKey} readOnly error/>
