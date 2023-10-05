@@ -3,7 +3,7 @@ import { Contract, InfuraProvider } from 'ethers';
 import { decryptWithPrivateKey } from '../../utils/crypto';
 const { genProof } = require("../../utils/snarkjs");
 import { Button, Form, Message } from 'semantic-ui-react';
-import zkSBTAddress from "../../web3/ZKSBT.json";
+import zkSBTAddress from "../../utils/ZKSBT.json";
 
 export default function GenerateZKP (props: any) {
   const [creditScore, setCreditScore] = useState('');

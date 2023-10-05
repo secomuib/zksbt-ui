@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import zkSBTAddress from "../../web3/ZKSBT.json";
+import zkSBTAddress from "../../utils/ZKSBT.json";
 import { getAddress, Wallet, ethers, parseEther } from "ethers";
 import { Button, Form, Message } from 'semantic-ui-react';
-import zksbt from '@/web3/zksbt';
 import { CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
 import { Web3Auth } from "@web3auth/modal";
 import { Client, Presets, UserOperationBuilder } from "userop";
