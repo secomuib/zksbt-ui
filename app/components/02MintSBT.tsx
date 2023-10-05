@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import zkSBTAddress from "../../utils/ZKSBT.json";
-import { getAddress, Wallet, ethers, parseEther } from "ethers";
+import { Wallet, ethers } from "ethers";
 import { Button, Form, Message } from 'semantic-ui-react';
 import { CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
 import { Web3Auth } from "@web3auth/modal";
-import { Client, Presets, UserOperationBuilder } from "userop";
+import { Client, Presets } from "userop";
+import { builderTransfer0Ethers } from '@/utils/builder';
 
 const { encryptWithPublicKey } = require("../../utils/crypto");
 const buildPoseidon = require("circomlibjs").buildPoseidon;
@@ -180,9 +181,7 @@ export default function MintSBT (props: any) {
         entryPoint
       );
 
-      const target = getAddress("0x5DF100D986A370029Ae8F09Bb56b67DA1950548E");
-      const value = parseEther("0");
-      const builder = account.execute(target, value, "0x");
+      const builder = builderTransfer0Ethers(account);
       
       /*const builder = new UserOperationBuilder().useDefaults({
         sender: account.getSender()
