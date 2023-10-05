@@ -30,8 +30,6 @@ export default function MintSBT (props: any) {
     type: "payg",
   };
 
-  const [error, setError] = useState('');
-
   const [minting, setMinting] = useState(false);
   const [creditScore, setCreditScore] = useState('');
   const [income, setIncome] = useState('');
@@ -171,7 +169,7 @@ export default function MintSBT (props: any) {
 
   const mint = async () => {
     setMinting(true);
-    setError('');
+    setEvents([]);
     try {
       if ((await zksbt.provider.getNetwork()).chainId != 5) {
         throw new Error("Please switch to Goerli testnet");
@@ -191,7 +189,7 @@ export default function MintSBT (props: any) {
       setTokenId(tokenId);
       props.setTokenId(tokenId);
     } catch (error) {
-      setError(String(error));
+      addEvent(String(error));
     }
     setMinting(false);
   }
@@ -243,8 +241,6 @@ export default function MintSBT (props: any) {
 
         <Button color='blue' onClick={mint} disabled={account==null}loading={minting}>
           Mint SBT to {props.address}</Button>
-
-        <Message error header="Error" content={error} visible={error!=''}/>
 
         <Form.TextArea label='Minting process' value={events.join(`\n`)} readOnly error/>
         <Form.Input label='SBT Token ID' type='text' value={tokenId} readOnly error/>
