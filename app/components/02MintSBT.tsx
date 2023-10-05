@@ -57,6 +57,7 @@ export default function MintSBT (props: any) {
   });
   const [sbtAddress, setSbtAddress] = useState('');
   const [tokenId, setTokenId] = useState('');
+  const [events, setEvents] = useState<string[]>([]);
 
   const checkOdd = (n: string) => {
     if (n.length % 2 == 0) {
@@ -199,6 +200,10 @@ export default function MintSBT (props: any) {
     setSbtAddress(zkSBTAddress.address);
   });
 
+  const addEvent = (newEvent: string) => {
+    setEvents((prevEvents) => [...prevEvents, newEvent]);
+  };
+
   return (
     <div id="mintsbt" style={{ marginBottom: "20px"}}>
       <Message
@@ -230,16 +235,19 @@ export default function MintSBT (props: any) {
 
         <Button color='blue' onClick={login}>Login</Button>
         <Button color='blue' onClick={logout} disabled={account==null}>Logout</Button>
+        
+        <Form.Input label='Social login Id token' type='text' value={idToken} readOnly error/>
+        <Form.Input label='Private key' type='text' value={privateKey} readOnly error/>
+        <Form.Input label='Public key' type='text' value={publicKey} readOnly error/>
+        <Form.Input label='Address' type='text' value={address} readOnly error/>
+
         <Button color='blue' onClick={mint} disabled={account==null}loading={minting}>
           Mint SBT to {props.address}</Button>
 
         <Message error header="Error" content={error} visible={error!=''}/>
-        
-        <Form.Input label='Id token' type='text' value={idToken} readOnly error/>
-        <Form.Input label='Private key' type='text' value={privateKey} readOnly error/>
-        <Form.Input label='Public key' type='text' value={publicKey} readOnly error/>
-        <Form.Input label='Address' type='text' value={address} readOnly error/>
-        <Form.Input label='Token ID' type='text' value={tokenId} readOnly error/>
+
+        <Form.TextArea label='Minting process' value={events.join(`\n`)} readOnly error/>
+        <Form.Input label='SBT Token ID' type='text' value={tokenId} readOnly error/>
       </Form>
     </div>
   );
