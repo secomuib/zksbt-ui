@@ -17,7 +17,7 @@ export default function RequestSBT (props: any) {
       );
     
     setPrivateKey(pKey);
-    setPublicKey(wallet.publicKey);
+    setPublicKey(wallet.signingKey.publicKey);
     setAddress(wallet.address);
   };
 

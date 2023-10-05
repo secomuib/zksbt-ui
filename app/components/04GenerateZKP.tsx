@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Contract, providers } from 'ethers';
+import { Contract, InfuraProvider } from 'ethers';
 import { decryptWithPrivateKey } from '../../utils/crypto';
 const { genProof } = require("../../utils/snarkjs");
 import { Button, Form, Message } from 'semantic-ui-react';
@@ -42,7 +42,7 @@ export default function GenerateZKP (props: any) {
   ];
 
   const readSBT = async () => {
-    const signer = new providers.InfuraProvider(
+    const signer = new InfuraProvider(
       "goerli",
       process.env.INFURA_API_KEY || "15c1d32581894b88a92d8d9e519e476c"
     );
