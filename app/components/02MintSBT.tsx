@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import zkSBTAddress from "../../web3/ZKSBT.json";
-import { Wallet, ethers } from "ethers";
+import { getAddress, Wallet, ethers, parseEther } from "ethers";
 import { Button, Form, Message } from 'semantic-ui-react';
 import zksbt from '@/web3/zksbt';
 import { CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
 import { Web3Auth } from "@web3auth/modal";
-import { Presets } from "userop";
+import { Client, Presets, UserOperationBuilder } from "userop";
 
 const { encryptWithPublicKey } = require("../../utils/crypto");
 const buildPoseidon = require("circomlibjs").buildPoseidon;
@@ -134,7 +134,7 @@ export default function MintSBT (props: any) {
       "0x"+pKey,
       ethers.getDefaultProvider("goerli")
       );
-    setPublicKey(wallet.publicKey);
+    setPublicKey(wallet.signingKey.publicKey);
     setAddress(acc.getSender());
   };
 
@@ -171,10 +171,56 @@ export default function MintSBT (props: any) {
     setMinting(true);
     setEvents([]);
     try {
-      if ((await zksbt.provider.getNetwork()).chainId != 5) {
-        throw new Error("Please switch to Goerli testnet");
+      if (!account) {
+        throw new Error("Account not initialized");
       }
-      const mintTx = await zksbt
+      addEvent("Sending transaction...");
+
+      const client = await Client.init(
+        "https://api.stackup.sh/v1/node/6b69276c7a5b5fd1d459f7553ee9645a32a15a01e097d8baffd102447bbf3870",
+        entryPoint
+      );
+
+      const target = getAddress("0x5DF100D986A370029Ae8F09Bb56b67DA1950548E");
+      const value = parseEther("0");
+      const builder = account.execute(target, value, "0x");
+      
+      /*const builder = new UserOperationBuilder().useDefaults({
+        sender: account.getSender()
+      });*/
+
+      const res = await client.sendUserOperation(
+        builder,
+        {
+          onBuild: async (op) => {
+            addEvent(`Signed UserOperation: `);
+            addEvent(JSON.stringify(op, null, 2) as any);
+          },
+        }
+      );
+      addEvent(`UserOpHash: ${res.userOpHash}`);
+  
+      addEvent("Waiting for transaction...");
+      const ev = await res.wait();
+      addEvent(`Transaction hash: ${ev?.transactionHash ?? null}`);
+
+      /*
+      {
+        "sender": "0x31bAEB1F75596942360e1c7FC68f26c3ea9F4511",
+        "nonce": "0x0",
+        "initCode": "0x9406cc6185a346906296840746125a0e449764545fbfb9cf0000000000000000000000001f92481ee62faa4e31b45aa7788157ffd87053140000000000000000000000000000000000000000000000000000000000000000",
+        "callData": "0xb61d27f60000000000000000000000005df100d986a370029ae8f09bb56b67da1950548e000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000000",
+        "callGasLimit": "0x2f44",
+        "verificationGasLimit": "0x6258d",
+        "preVerificationGas": "0xd157",
+        "maxFeePerGas": "0x14",
+        "maxPriorityFeePerGas": "0x2",
+        "paymasterAndData": "0xe93eca6595fe94091dc1af46aac2a8b5d799077000000000000000000000000000000000000000000000000000000000651ed36e000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d23f3a666cd316c411fd62d87963e0b6a3d3bd1578fe59baf93a1121755ffdb9127322c0d1d2c35a7995da364d2511d1bb297aabd97a5fbaf3c14e74cf1d7a6e1c",
+        "signature": "0x6bd43443aa35092ba587c346253f6dde01498547344752729475dfacb0d8f4414acf0e99af02587657c35e63202dd04dab9ade4b379bb13ac3e037b1eb77abc51b"
+      } */
+
+
+      /* const mintTx = await zksbt
       .mint(
         props.address,
         root,
@@ -187,7 +233,7 @@ export default function MintSBT (props: any) {
       const tokenId = mintReceipt.events![0].args![1].toNumber();
 
       setTokenId(tokenId);
-      props.setTokenId(tokenId);
+      props.setTokenId(tokenId); */
     } catch (error) {
       addEvent(String(error));
     }
