@@ -1,4 +1,5 @@
 import { 
+  AbiCoder,
   BytesLike,
   Contract,
   getAddress,
@@ -75,9 +76,22 @@ const signer = new InfuraProvider(
 );
 
 const zksbt = new Contract(zkSBTAddress.address, zkSBTAddress.abi, signer);
+
+const getTokenIdFromMintTransaction = async (txHash: string) => {
+  const receipt = await signer.getTransactionReceipt(txHash);
+
+  const abi = new AbiCoder();
+  const decodedLogs = abi.decode(
+    ["address","uint256"],
+    receipt?.logs[1].data
+  );
+
+  return decodedLogs[1].toString();
+};
   
 export {
   builderTransfer0Ethers,
   mintBuilder,
-  zksbt
+  zksbt,
+  getTokenIdFromMintTransaction
 };

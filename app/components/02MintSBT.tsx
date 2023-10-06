@@ -5,7 +5,7 @@ import { CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
 import { Web3Auth } from "@web3auth/modal";
 import { Client, Presets } from "userop";
 import zkSBTAddress from "@/utils/ZKSBT.json";
-import { mintBuilder } from '@/utils/web3';
+import { getTokenIdFromMintTransaction, mintBuilder } from '@/utils/web3';
 
 const { encryptWithPublicKey } = require("../../utils/crypto");
 const buildPoseidon = require("circomlibjs").buildPoseidon;
@@ -200,28 +200,21 @@ export default function MintSBT (props: any) {
         }
       );
       addEvent(`UserOpHash: ${res.userOpHash}`);
-  
+
       addEvent("Waiting for transaction...");
       const ev = await res.wait();
       addEvent(`Transaction hash: ${ev?.transactionHash ?? null}`);
 
+      if (ev?.transactionHash) {
+        const transactionHash = ev?.transactionHash;
+        const tokenId = await getTokenIdFromMintTransaction(transactionHash);
+
+        setTokenId(tokenId);
+        props.setTokenId(tokenId);
+      }
       /*
-      {
-        "sender": "0x31bAEB1F75596942360e1c7FC68f26c3ea9F4511",
-        "nonce": "0x0",
-        "initCode": "0x9406cc6185a346906296840746125a0e449764545fbfb9cf0000000000000000000000001f92481ee62faa4e31b45aa7788157ffd87053140000000000000000000000000000000000000000000000000000000000000000",
-        "callData": "0xb61d27f60000000000000000000000005df100d986a370029ae8f09bb56b67da1950548e000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000000",
-        "callGasLimit": "0x2f44",
-        "verificationGasLimit": "0x6258d",
-        "preVerificationGas": "0xd157",
-        "maxFeePerGas": "0x14",
-        "maxPriorityFeePerGas": "0x2",
-        "paymasterAndData": "0xe93eca6595fe94091dc1af46aac2a8b5d799077000000000000000000000000000000000000000000000000000000000651ed36e000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d23f3a666cd316c411fd62d87963e0b6a3d3bd1578fe59baf93a1121755ffdb9127322c0d1d2c35a7995da364d2511d1bb297aabd97a5fbaf3c14e74cf1d7a6e1c",
-        "signature": "0x6bd43443aa35092ba587c346253f6dde01498547344752729475dfacb0d8f4414acf0e99af02587657c35e63202dd04dab9ade4b379bb13ac3e037b1eb77abc51b"
-      } */
-
-
-      /* const mintTx = await zksbt
+      
+      const mintTx = await zksbt
       .mint(
         props.address,
         root,
