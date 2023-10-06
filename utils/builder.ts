@@ -1,4 +1,4 @@
-import { Contract, InfuraProvider, getAddress, parseEther } from "ethers";
+import { BytesLike, Contract, InfuraProvider, getAddress, parseEther } from "ethers";
 import { Presets } from "userop";
 import zkSBTAddress from "../utils/ZKSBT.json";
 
@@ -10,8 +10,20 @@ const builderTransfer0Ethers = (account: Presets.Builder.SimpleAccount) => {
   return builder;
 };
 
+type EncryptedDataStruct = {
+  iv: BytesLike;
+  ephemPublicKey: BytesLike;
+  ciphertext: BytesLike;
+  mac: BytesLike;
+};
+
 const mintBuilder = (
-  account: Presets.Builder.SimpleAccount
+  account: Presets.Builder.SimpleAccount,
+  to: string,
+  root: BytesLike,
+  encryptedCreditScore: EncryptedDataStruct,
+  encryptedIncome: EncryptedDataStruct,
+  encryptedReportDate: EncryptedDataStruct
 ) => {
   const signer = new InfuraProvider(
     "goerli",
@@ -21,7 +33,13 @@ const mintBuilder = (
 
   const encodedCallData = zksbt.interface.encodeFunctionData(
     "mint",
-    []
+    [
+      to,
+      root,
+      encryptedCreditScore,
+      encryptedIncome,
+      encryptedReportDate
+    ]
   );
 
   const builder = account.execute(

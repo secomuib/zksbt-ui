@@ -181,7 +181,14 @@ export default function MintSBT (props: any) {
         entryPoint
       );
 
-      const builder = mintBuilder(account);
+      const builder = mintBuilder(
+        account,
+        props.address,
+        root,
+        encryptedCreditScore,
+        encryptedIncome,
+        encryptedReportDate
+      );
 
       const res = await client.sendUserOperation(
         builder,
