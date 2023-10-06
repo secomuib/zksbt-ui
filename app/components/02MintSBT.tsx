@@ -5,7 +5,7 @@ import { Button, Form, Message } from 'semantic-ui-react';
 import { CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
 import { Web3Auth } from "@web3auth/modal";
 import { Client, Presets } from "userop";
-import { builderTransfer0Ethers } from '@/utils/builder';
+import { mintBuilder } from '@/utils/builder';
 
 const { encryptWithPublicKey } = require("../../utils/crypto");
 const buildPoseidon = require("circomlibjs").buildPoseidon;
@@ -181,11 +181,7 @@ export default function MintSBT (props: any) {
         entryPoint
       );
 
-      const builder = builderTransfer0Ethers(account);
-      
-      /*const builder = new UserOperationBuilder().useDefaults({
-        sender: account.getSender()
-      });*/
+      const builder = mintBuilder(account);
 
       const res = await client.sendUserOperation(
         builder,
