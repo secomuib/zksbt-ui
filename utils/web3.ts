@@ -1,6 +1,12 @@
-import { BytesLike, Contract, InfuraProvider, getAddress, parseEther } from "ethers";
+import { 
+  BytesLike,
+  Contract,
+  InfuraProvider,
+  getAddress,
+  parseEther
+} from "ethers";
 import { Presets } from "userop";
-import zkSBTAddress from "../utils/ZKSBT.json";
+import zkSBTAddress from "./ZKSBT.json";
 
 const builderTransfer0Ethers = (account: Presets.Builder.SimpleAccount) => {
   const target = getAddress("0x5DF100D986A370029Ae8F09Bb56b67DA1950548E");
