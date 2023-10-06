@@ -1,8 +1,8 @@
 import { 
   BytesLike,
   Contract,
-  InfuraProvider,
   getAddress,
+  InfuraProvider,
   parseEther
 } from "ethers";
 import { Presets } from "userop";
@@ -69,7 +69,15 @@ const mintBuilder = (
   return builder;
 }
 
+const signer = new InfuraProvider(
+  "goerli",
+  process.env.INFURA_API_KEY || "15c1d32581894b88a92d8d9e519e476c"
+);
+
+const zksbt = new Contract(zkSBTAddress.address, zkSBTAddress.abi, signer);
+  
 export {
   builderTransfer0Ethers,
-  mintBuilder
+  mintBuilder,
+  zksbt
 };

@@ -3,7 +3,7 @@ import { Contract, InfuraProvider } from 'ethers';
 import { decryptWithPrivateKey } from '../../utils/crypto';
 import { Button, Form, Message } from 'semantic-ui-react';
 const { genProof } = require("@/utils/snarkjs");
-import zkSBTAddress from "@/utils/ZKSBT.json";
+import { zksbt } from "@/utils/web3";
 
 export default function GenerateZKP (props: any) {
   const [creditScore, setCreditScore] = useState('');
@@ -42,12 +42,6 @@ export default function GenerateZKP (props: any) {
   ];
 
   const readSBT = async () => {
-    const signer = new InfuraProvider(
-      "goerli",
-      process.env.INFURA_API_KEY || "15c1d32581894b88a92d8d9e519e476c"
-    );
-    const zksbt = new Contract(zkSBTAddress.address, zkSBTAddress.abi, signer);
-
     const owner = await zksbt.ownerOf(props.tokenId);
     setOwner(owner);
 
