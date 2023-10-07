@@ -282,7 +282,7 @@ export default function MintSBT (props: any) {
         <Button color='blue' onClick={mint} disabled={account==null}loading={minting}>
           Mint SBT to {props.address}</Button>
 
-        <Form.TextArea label='Minting process' value={events.join(`\n`)} readOnly error/>
+        <Form.Field control='textarea' rows='10' label='Minting process' value={events.join(`\n`)} readOnly error/>
         <Form.Input label='SBT Token ID' type='text' value={tokenId} readOnly error/>
       </Form>
     </div>
