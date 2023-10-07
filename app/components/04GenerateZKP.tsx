@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Contract, InfuraProvider } from 'ethers';
 import { decryptWithPrivateKey } from '../../utils/crypto';
 import { Button, Form, Message } from 'semantic-ui-react';
 const { genProof } = require("@/utils/snarkjs");
