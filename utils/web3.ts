@@ -33,8 +33,7 @@ const getMetamaskSigner = async () => {
   return signer;
 }
 
-const builderTransfer0Ethers = (account: Presets.Builder.SimpleAccount) => {
-  const target = getAddress("0x5DF100D986A370029Ae8F09Bb56b67DA1950548E");
+const builderTransfer0Ethers = (target: string, account: Presets.Builder.SimpleAccount) => {
   const value = parseEther("0");
   const builder = account.execute(target, value, "0x");
 
