@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Wallet, ethers } from "ethers";
+import { Wallet } from "ethers";
 import { Button, Form, Message } from 'semantic-ui-react';
 import { CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
 import { Web3Auth } from "@web3auth/modal";
@@ -19,8 +19,6 @@ export default function MintSBT (props: any) {
     null
   );
   const [idToken, setIdToken] = useState('');
-  const [privateKey, setPrivateKey] = useState('');
-  const [publicKey, setPublicKey] = useState('');
   const [address, setAddress] = useState('');
 
   const entryPoint = "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789";
@@ -143,13 +141,6 @@ export default function MintSBT (props: any) {
     const acc = await createAccount(pKey);
     setIdToken(authenticateUser.idToken);
     setAccount(acc);
-    setPrivateKey("0x"+pKey);
-
-    const wallet: Wallet = new ethers.Wallet(
-      "0x"+pKey,
-      ethers.getDefaultProvider("goerli")
-      );
-    setPublicKey(wallet.signingKey.publicKey);
     setAddress(acc.getSender());
   };
 
@@ -160,8 +151,6 @@ export default function MintSBT (props: any) {
     await web3auth.logout();
     setIdToken('');
     setAccount(null);
-    setPrivateKey('');
-    setPublicKey('');
     setAddress('');
   };
 
@@ -290,8 +279,6 @@ export default function MintSBT (props: any) {
         <Button color='blue' onClick={logout}>Logout</Button>
         
         <Form.Input label='Social login Id token' type='text' value={idToken} readOnly error/>
-        <Form.Input label='Private key' type='text' value={privateKey} readOnly error/>
-        <Form.Input label='Public key' type='text' value={publicKey} readOnly error/>
         <Form.Input label='Address' type='text' value={address} readOnly error/>
 
         <Button color='blue' onClick={mint} disabled={account==null}loading={minting}>
