@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import { Contract, InfuraProvider } from 'ethers';
 import { decryptWithPrivateKey } from '../../utils/crypto';
-const { genProof } = require("../../utils/snarkjs");
 import { Button, Form, Message } from 'semantic-ui-react';
-import zksbt from '@/web3/zksbt';
+const { genProof } = require("@/utils/snarkjs");
+import { zksbt } from "@/utils/web3";
 
 export default function GenerateZKP (props: any) {
   const [creditScore, setCreditScore] = useState('');

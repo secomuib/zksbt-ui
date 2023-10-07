@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button, Form, Message } from 'semantic-ui-react';
 
-const { verifyProof } = require("../../utils/snarkjs");
+const { verifyProof } = require("@/utils/snarkjs");
 
 export default function VerifyZKP (props: any) {
   const [result, setResult] = useState('');
