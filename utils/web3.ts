@@ -26,7 +26,7 @@ const getMetamaskSigner = async () => {
     // We are on the server *OR* the user is not running metamask
     signer = new InfuraProvider(
       "goerli",
-      process.env.INFURA_API_KEY || "15c1d32581894b88a92d8d9e519e476c"
+      process.env.NEXT_PUBLIC_INFURA_API_KEY
     );
   }
 
@@ -58,7 +58,7 @@ const mintBuilder = (
 ) => {
   const signer = new InfuraProvider(
     "goerli",
-    process.env.INFURA_API_KEY || "15c1d32581894b88a92d8d9e519e476c"
+    process.env.NEXT_PUBLIC_INFURA_API_KEY
   );
   const zksbt = new Contract(zkSBTAddress.address, zkSBTAddress.abi, signer);
 
@@ -96,7 +96,7 @@ const mintBuilder = (
 
 const signer = new InfuraProvider(
   "goerli",
-  process.env.INFURA_API_KEY || "15c1d32581894b88a92d8d9e519e476c"
+  process.env.NEXT_PUBLIC_INFURA_API_KEY
 );
 
 const zksbt = new Contract(zkSBTAddress.address, zkSBTAddress.abi, signer);
