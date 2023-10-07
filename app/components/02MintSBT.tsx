@@ -25,10 +25,25 @@ export default function MintSBT (props: any) {
 
   const entryPoint = "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789";
   const simpleAccountFactory = "0x9406Cc6185a346906296840746125a0E44976454";
-  const pmUrl = "https://api.stackup.sh/v1/paymaster/6b69276c7a5b5fd1d459f7553ee9645a32a15a01e097d8baffd102447bbf3870";
   const pmContext = {
     type: "payg",
   };
+
+  const rpcUrl = process.env.NEXT_PUBLIC_RPC_URL;
+  const pmUrl = process.env.NEXT_PUBLIC_PAYMASTER_URL;
+  const web3AuthClientId = process.env.NEXT_PUBLIC_WEB3_AUTH_CLIENT_ID;
+
+  if (!rpcUrl) {
+    throw new Error("RPC_URL is undefined");
+  }
+
+  if (!pmUrl) {
+    throw new Error("PAYMASTER_RPC_URL is undefined");
+  }
+
+  if (!web3AuthClientId) {
+    throw new Error("WEB3AUTH_CLIENT_ID is undefined");
+  }
 
   const [minting, setMinting] = useState(false);
   const [creditScore, setCreditScore] = useState('');
@@ -97,13 +112,13 @@ export default function MintSBT (props: any) {
 
   const login = async () => {
     const web3auth = new Web3Auth({
-      clientId: process.env.WEB3_AUTH_CLIENT_ID || "BFsKtGfr5armoE_s_Vig-wzBeonn0DSsfO2w-qDdKV1T3Ac6tSuZovgKx0nnwMj4hdOc_38POMFqXVcT6e0n1lo",
+      clientId: web3AuthClientId,
       // testnet: BB9-HFtHLnNBeMZhxvALkBrMqwJjuSZNTiE2gd9mwnUzrmqLGKXER07oE3WTcZkjlE4ZKw6lxEoE-Rx6QfoihI4
       web3AuthNetwork: "testnet",
       chainConfig: {
         chainNamespace: CHAIN_NAMESPACES.EIP155,
         chainId: "0x5",
-        rpcTarget: "https://api.stackup.sh/v1/node/6b69276c7a5b5fd1d459f7553ee9645a32a15a01e097d8baffd102447bbf3870"
+        rpcTarget: rpcUrl
       },
     });
 
@@ -154,7 +169,7 @@ export default function MintSBT (props: any) {
     const paymaster = Presets.Middleware.verifyingPaymaster(pmUrl, pmContext)
     return await Presets.Builder.SimpleAccount.init(
       new Wallet(privateKey) as any,
-      "https://api.stackup.sh/v1/node/6b69276c7a5b5fd1d459f7553ee9645a32a15a01e097d8baffd102447bbf3870",
+      rpcUrl,
       entryPoint,
       simpleAccountFactory,
       paymaster

@@ -26,15 +26,14 @@ const getMetamaskSigner = async () => {
     // We are on the server *OR* the user is not running metamask
     signer = new InfuraProvider(
       "goerli",
-      process.env.INFURA_API_KEY || "15c1d32581894b88a92d8d9e519e476c"
+      process.env.NEXT_PUBLIC_INFURA_API_KEY
     );
   }
 
   return signer;
 }
 
-const builderTransfer0Ethers = (account: Presets.Builder.SimpleAccount) => {
-  const target = getAddress("0x5DF100D986A370029Ae8F09Bb56b67DA1950548E");
+const builderTransfer0Ethers = (target: string, account: Presets.Builder.SimpleAccount) => {
   const value = parseEther("0");
   const builder = account.execute(target, value, "0x");
 
@@ -58,7 +57,7 @@ const mintBuilder = (
 ) => {
   const signer = new InfuraProvider(
     "goerli",
-    process.env.INFURA_API_KEY || "15c1d32581894b88a92d8d9e519e476c"
+    process.env.NEXT_PUBLIC_INFURA_API_KEY
   );
   const zksbt = new Contract(zkSBTAddress.address, zkSBTAddress.abi, signer);
 
@@ -96,7 +95,7 @@ const mintBuilder = (
 
 const signer = new InfuraProvider(
   "goerli",
-  process.env.INFURA_API_KEY || "15c1d32581894b88a92d8d9e519e476c"
+  process.env.NEXT_PUBLIC_INFURA_API_KEY
 );
 
 const zksbt = new Contract(zkSBTAddress.address, zkSBTAddress.abi, signer);
