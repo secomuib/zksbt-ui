@@ -1,5 +1,8 @@
+'use client';
+
 import { 
   AbiCoder,
+  BrowserProvider,
   BytesLike,
   Contract,
   getAddress,
@@ -8,6 +11,27 @@ import {
 } from "ethers";
 import { Presets } from "userop";
 import zkSBTAddress from "./ZKSBT.json";
+
+declare var window: any;
+
+const getMetamaskSigner = async () => {
+  let signer;
+
+  if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
+    // We are in the browser and metamask is running.
+    window.ethereum.request({ method: "eth_requestAccounts" }); 
+    const provider = new BrowserProvider(window.ethereum);
+    signer = provider.getSigner();
+  } else {
+    // We are on the server *OR* the user is not running metamask
+    signer = new InfuraProvider(
+      "goerli",
+      process.env.INFURA_API_KEY || "15c1d32581894b88a92d8d9e519e476c"
+    );
+  }
+
+  return signer;
+}
 
 const builderTransfer0Ethers = (account: Presets.Builder.SimpleAccount) => {
   const target = getAddress("0x5DF100D986A370029Ae8F09Bb56b67DA1950548E");
@@ -91,7 +115,8 @@ const getTokenIdFromMintTransaction = async (txHash: string) => {
   
 export {
   builderTransfer0Ethers,
+  getTokenIdFromMintTransaction,
+  getMetamaskSigner,
   mintBuilder,
-  zksbt,
-  getTokenIdFromMintTransaction
+  zksbt
 };
