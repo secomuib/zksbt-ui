@@ -24,7 +24,7 @@
     "circomlibjs": "^0.1.7",
     "eslint": "latest",
     "eslint-config-next": "latest",
-    "eth-crypto": "^1.9.0",
+    "eth-crypto": "^2.6.0",
     "ethers": "^6.4.2",
     "semantic-ui-css": "^2.5.0",
     "semantic-ui-react": "^2.1.4",
