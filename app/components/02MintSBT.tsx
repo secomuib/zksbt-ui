@@ -111,8 +111,7 @@ export default function MintSBT (props: any) {
   const login = async () => {
     const web3auth = new Web3Auth({
       clientId: web3AuthClientId,
-      // testnet: BB9-HFtHLnNBeMZhxvALkBrMqwJjuSZNTiE2gd9mwnUzrmqLGKXER07oE3WTcZkjlE4ZKw6lxEoE-Rx6QfoihI4
-      web3AuthNetwork: "testnet",
+      web3AuthNetwork: "sapphire_mainnet",
       chainConfig: {
         chainNamespace: CHAIN_NAMESPACES.EIP155,
         chainId: "0x5",
