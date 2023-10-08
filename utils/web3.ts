@@ -106,7 +106,7 @@ const getTokenIdFromMintTransaction = async (txHash: string) => {
   const abi = new AbiCoder();
   const decodedLogs = abi.decode(
     ["address","uint256"],
-    receipt?.logs[1].data
+    receipt?.logs[1].data || ""
   );
 
   return decodedLogs[1].toString();
