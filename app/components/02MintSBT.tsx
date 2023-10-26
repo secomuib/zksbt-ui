@@ -180,7 +180,7 @@ export default function MintSBT (props: any) {
       addEvent("Sending transaction...");
 
       const client = await Client.init(
-        "https://api.stackup.sh/v1/node/6b69276c7a5b5fd1d459f7553ee9645a32a15a01e097d8baffd102447bbf3870",
+        rpcUrl,
         entryPoint
       );
 
