@@ -5,7 +5,6 @@ import {
   BrowserProvider,
   BytesLike,
   Contract,
-  getAddress,
   InfuraProvider,
   parseEther
 } from "ethers";
@@ -40,20 +39,11 @@ const builderTransfer0Ethers = (target: string, account: Presets.Builder.SimpleA
   return builder;
 };
 
-type EncryptedDataStruct = {
-  iv: BytesLike;
-  ephemPublicKey: BytesLike;
-  ciphertext: BytesLike;
-  mac: BytesLike;
-};
-
 const mintBuilder = (
   account: Presets.Builder.SimpleAccount,
   to: string,
   root: BytesLike,
-  encryptedCreditScore: EncryptedDataStruct,
-  encryptedIncome: EncryptedDataStruct,
-  encryptedReportDate: EncryptedDataStruct
+  encryptedData: BytesLike[]
 ) => {
   const signer = new InfuraProvider(
     "goerli",
@@ -66,9 +56,7 @@ const mintBuilder = (
     [
       to,
       root,
-      encryptedCreditScore,
-      encryptedIncome,
-      encryptedReportDate
+      encryptedData
     ]
   );
 

@@ -10,24 +10,9 @@ export default function GenerateZKP (props: any) {
   const [reportDate, setReportDate] = useState('');
   const [owner, setOwner] = useState('');
   const [root, setRoot] = useState('');
-  const [encryptedCreditScore, setEncryptedCreditScore] = useState({
-    iv: '',
-    ephemPublicKey: '',
-    ciphertext: '',
-    mac: ''
-  });
-  const [encryptedIncome, setEncryptedIncome] = useState({
-    iv: '',
-    ephemPublicKey: '',
-    ciphertext: '',
-    mac: ''
-  });
-  const [encryptedReportDate, setEncryptedReportDate] = useState({
-    iv: '',
-    ephemPublicKey: '',
-    ciphertext: '',
-    mac: ''
-  });
+  const [encryptedCreditScore, setEncryptedCreditScore] = useState('');
+  const [encryptedIncome, setEncryptedIncome] = useState('');
+  const [encryptedReportDate, setEncryptedReportDate] = useState('');
   const [proof, setProof] = useState('');
   const [publicSignals, setPublicSignals] = useState('');
 
@@ -44,11 +29,12 @@ export default function GenerateZKP (props: any) {
     const owner = await zksbt.ownerOf(props.tokenId);
     setOwner(owner);
 
-    const sbtData = await zksbt.sbtData(props.tokenId);
-    setRoot(sbtData.root);
-    setEncryptedCreditScore(sbtData.encryptedCreditScore);
-    setEncryptedIncome(sbtData.encryptedIncome);
-    setEncryptedReportDate(sbtData.encryptedReportDate);
+    const storedRoot = await zksbt.getRoot(props.tokenId);
+    const encryptedData = await zksbt.getEncryptedData(props.tokenId);
+    setRoot(storedRoot);
+    setEncryptedCreditScore(encryptedData[0]);
+    setEncryptedIncome(encryptedData[1]);
+    setEncryptedReportDate(encryptedData[2]);
   }
 
   const decryptData = async () => {
@@ -116,7 +102,7 @@ export default function GenerateZKP (props: any) {
           type='text' value={root} readOnly error/>
         <Form.Input label='Encrypted data (with publicKey)'
           type='text'
-          value={encryptedCreditScore.ciphertext?'['+JSON.stringify(encryptedCreditScore)+', '+JSON.stringify(encryptedIncome)+', '+JSON.stringify(encryptedReportDate)+']':''}
+          value={encryptedCreditScore?'['+encryptedCreditScore+', '+encryptedIncome+', '+encryptedReportDate+']':''}
           readOnly error/>
         <Form.Input label='Private key' type='text' value={props.privateKey} readOnly error/>
 

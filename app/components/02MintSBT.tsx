@@ -48,24 +48,9 @@ export default function MintSBT (props: any) {
   const [income, setIncome] = useState('');
   const [reportDate, setReportDate] = useState('');
   const [root, setRoot] = useState('');
-  const [encryptedCreditScore, setEncryptedCreditScore] = useState({
-    iv: '',
-    ephemPublicKey: '',
-    ciphertext: '',
-    mac: ''
-  });
-  const [encryptedIncome, setEncryptedIncome] = useState({
-    iv: '',
-    ephemPublicKey: '',
-    ciphertext: '',
-    mac: ''
-  });
-  const [encryptedReportDate, setEncryptedReportDate] = useState({
-    iv: '',
-    ephemPublicKey: '',
-    ciphertext: '',
-    mac: ''
-  });
+  const [encryptedCreditScore, setEncryptedCreditScore] = useState('');
+  const [encryptedIncome, setEncryptedIncome] = useState('');
+  const [encryptedReportDate, setEncryptedReportDate] = useState('');
   const [sbtAddress, setSbtAddress] = useState('');
   const [tokenId, setTokenId] = useState('');
   const [events, setEvents] = useState<string[]>([]);
@@ -91,15 +76,15 @@ export default function MintSBT (props: any) {
 
     // middleware encrypts data with public key of address1
     const eCreditScore = await encryptWithPublicKey(
-      props.publicKey.replace("0x", ""),
+      props.publicKey,
       creditScore
     );
     const eIncome = await encryptWithPublicKey(
-      props.publicKey.replace("0x", ""),
+      props.publicKey,
       income
     );
     const eReportDate = await encryptWithPublicKey(
-      props.publicKey.replace("0x", ""),
+      props.publicKey,
       (new Date(reportDate).getTime()).toString()
     );
 
@@ -188,9 +173,11 @@ export default function MintSBT (props: any) {
         account,
         props.address,
         root,
-        encryptedCreditScore,
-        encryptedIncome,
-        encryptedReportDate
+        [
+          encryptedCreditScore,
+          encryptedIncome,
+          encryptedReportDate
+        ]
       );
 
       const res = await client.sendUserOperation(
@@ -270,7 +257,7 @@ export default function MintSBT (props: any) {
           type='text' value={root} readOnly error/>
         <Form.Input label='Encrypted data (with publicKey)'
           type='text'
-          value={encryptedCreditScore.ciphertext?'['+JSON.stringify(encryptedCreditScore)+', '+JSON.stringify(encryptedIncome)+', '+JSON.stringify(encryptedReportDate)+']':''}
+          value={encryptedCreditScore?'['+encryptedCreditScore+', '+encryptedIncome+', '+encryptedReportDate+']':''}
           readOnly error/>
         <Form.Input label='SBT smart contract address' type='text' value={sbtAddress} readOnly error/>
 
