@@ -6,6 +6,12 @@ const { verifyProof } = require("@/utils/snarkjs");
 export default function VerifyZKP (props: any) {
   const [result, setResult] = useState('');
 
+  const fieldOptions = [
+    { key: '1', value: '1', text: 'creditScore' },
+    { key: '2', value: '2', text: 'income' },
+    { key: '3', value: '3', text: 'reportDate' }
+  ];
+
   const operatorOptions = [
     { key: '0', value: '0', text: '==' },
     { key: '1', value: '1', text: '!=' },
@@ -38,7 +44,7 @@ export default function VerifyZKP (props: any) {
       />
       <Form className='attached fluid segment'>
         <Form.Group widths='equal'>
-          <Form.Input label='Credit score' type='text' value='?'
+          <Form.Select label='Field' labeled options={fieldOptions} value={props.field}
             readOnly error/>
           <Form.Select label='Operator' labeled options={operatorOptions} value={props.operator}
             readOnly error/>

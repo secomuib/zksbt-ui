@@ -27,9 +27,9 @@ export default function Home() {
       <RequestSBT setPrivateKey={setPrivatKey} setPublicKey={setPublicKey} setAddress={setAddress}/>
       <MintSBT publicKey={publicKey} address={address} setTokenId={setTokenId}/>
       <RequestZKP setField={setField} setThreshold={setThreshold} setOperator={setOperator}/>
-      <GenerateZKP privateKey={privateKey} tokenId={tokenId} threshold={threshold}
+      <GenerateZKP privateKey={privateKey} tokenId={tokenId} field={field} threshold={threshold}
           operator={operator} setProof={setProof} setPublicSignals={setPublicSignals}/>
-      <VerifyZKP threshold={threshold} operator={operator} proof={proof} publicSignals={publicSignals}/>
+      <VerifyZKP field={field} threshold={threshold} operator={operator} proof={proof} publicSignals={publicSignals}/>
       <Footer/>
     </Container>
   )
