@@ -5,8 +5,8 @@ const snarkjs = require("snarkjs");
 const genProof = async (input: any) => {
   const { proof, publicSignals } = await snarkjs.groth16.fullProve(
     input,
-    "verifyCreditScore.wasm",
-    "verifyCreditScore_0001.zkey"
+    "verify4.wasm",
+    "verify4_0001.zkey"
   );
 
   return { proof, publicSignals };
