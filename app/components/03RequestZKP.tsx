@@ -2,8 +2,15 @@ import { useState } from 'react';
 import { Button, Form, Message } from 'semantic-ui-react';
 
 export default function RequestZKP (props: any) {
+  const [field, setField] = useState('1');
   const [threshold, setThreshold] = useState('');
   const [operator, setOperator] = useState('3');
+
+  const fieldOptions = [
+    { key: '1', value: '1', text: 'creditScore' },
+    { key: '2', value: '2', text: 'income' },
+    { key: '3', value: '3', text: 'reportDate' }
+  ];
 
   const operatorOptions = [
     { key: '0', value: '0', text: '==' },
@@ -15,6 +22,7 @@ export default function RequestZKP (props: any) {
   ];
 
   const requestData = () => {
+    props.setField(field);
     props.setThreshold(threshold);
     props.setOperator(operator);
   }
@@ -30,8 +38,7 @@ export default function RequestZKP (props: any) {
       />
       <Form className='attached fluid segment'>
         <Form.Group widths='equal'>
-          <Form.Input label='Credit score' type='text' value='?'
-            readOnly error/>
+          <Form.Select label='Field' options={fieldOptions} onChange={(e, data) => {setField(String(data.value))}}/>
           <Form.Select label='Operator' options={operatorOptions} onChange={(e, data) => {setOperator(String(data.value))}}/>
           <Form.Input label='Threshold' type='number'
             onChange={(e) => setThreshold(e.target.value)}/>

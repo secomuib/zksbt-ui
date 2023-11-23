@@ -15,6 +15,7 @@ export default function Home() {
   const [publicKey, setPublicKey] = useState('');
   const [address, setAddress] = useState('');
   const [tokenId, setTokenId] = useState('');
+  const [field, setField] = useState('1');
   const [threshold, setThreshold] = useState('');
   const [operator, setOperator] = useState('3');
   const [proof, setProof] = useState('');
@@ -25,7 +26,7 @@ export default function Home() {
       <Header/>
       <RequestSBT setPrivateKey={setPrivatKey} setPublicKey={setPublicKey} setAddress={setAddress}/>
       <MintSBT publicKey={publicKey} address={address} setTokenId={setTokenId}/>
-      <RequestZKP setThreshold={setThreshold} setOperator={setOperator}/>
+      <RequestZKP setField={setField} setThreshold={setThreshold} setOperator={setOperator}/>
       <GenerateZKP privateKey={privateKey} tokenId={tokenId} threshold={threshold}
           operator={operator} setProof={setProof} setPublicSignals={setPublicSignals}/>
       <VerifyZKP threshold={threshold} operator={operator} proof={proof} publicSignals={publicSignals}/>
