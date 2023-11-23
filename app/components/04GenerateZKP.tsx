@@ -8,6 +8,7 @@ export default function GenerateZKP (props: any) {
   const [creditScore, setCreditScore] = useState('');
   const [income, setIncome] = useState('');
   const [reportDate, setReportDate] = useState('');
+  const [value, setValue] = useState('');
   const [owner, setOwner] = useState('');
   const [root, setRoot] = useState('');
   const [encryptedCreditScore, setEncryptedCreditScore] = useState('');
@@ -15,6 +16,12 @@ export default function GenerateZKP (props: any) {
   const [encryptedReportDate, setEncryptedReportDate] = useState('');
   const [proof, setProof] = useState('');
   const [publicSignals, setPublicSignals] = useState('');
+
+  const fieldOptions = [
+    { key: '1', value: '1', text: 'creditScore' },
+    { key: '2', value: '2', text: 'income' },
+    { key: '3', value: '3', text: 'reportDate' }
+  ];
 
   const operatorOptions = [
     { key: '0', value: '0', text: '==' },
@@ -39,29 +46,41 @@ export default function GenerateZKP (props: any) {
 
   const decryptData = async () => {
     // we decrypt the data with the private key of address1
-    setCreditScore(await decryptWithPrivateKey(
+    const creditScore = await decryptWithPrivateKey(
       props.privateKey,
       encryptedCreditScore
-    ));
-    setIncome(await decryptWithPrivateKey(
+    );
+    const income = await decryptWithPrivateKey(
       props.privateKey,
       encryptedIncome
-    ));
-    setReportDate(await decryptWithPrivateKey(
+    );
+    const reportDate = await decryptWithPrivateKey(
       props.privateKey,
       encryptedReportDate
-    ));
+    );
+
+    setCreditScore(creditScore);
+    setIncome(income);
+    setReportDate(reportDate);
+
+    if (props.field == '1') {
+      setValue(creditScore);
+    } else if (props.field == '2') {
+      setValue(income);
+    } else if (props.field == '3') {
+      setValue(reportDate);
+    }
   }
 
   const generateZKP = async () => {
     // input of ZKP
     const input = {
-      index: 1, // credit score
+      index: props.field,
       root: root,
       owner: owner,
       threshold: props.threshold,
       operator: props.operator,
-      value: +creditScore,
+      value: +value,
       data: [
         owner,
         +creditScore,
@@ -116,7 +135,9 @@ export default function GenerateZKP (props: any) {
         <Form.Input label='Report date' type='number' value={reportDate}
           onChange={(e) => setReportDate(e.target.value)}/>
         <Form.Group widths='equal'>
-          <Form.Input label='Credit score' type='text' value={creditScore}
+          <Form.Select label='Field' labeled options={fieldOptions} value={props.field}
+            readOnly error/>
+          <Form.Input label='Value' type='text' value={value}
             readOnly error/>
           <Form.Select label='Operator' labeled options={operatorOptions} value={props.operator}
             readOnly error/>
