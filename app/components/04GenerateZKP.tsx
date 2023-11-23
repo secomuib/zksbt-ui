@@ -56,6 +56,7 @@ export default function GenerateZKP (props: any) {
   const generateZKP = async () => {
     // input of ZKP
     const input = {
+      index: 1, // credit score
       root: root,
       owner: owner,
       threshold: props.threshold,
