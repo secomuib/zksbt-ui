@@ -99,7 +99,7 @@ export default function MintSBT (props: any) {
       web3AuthNetwork: "sapphire_mainnet",
       chainConfig: {
         chainNamespace: CHAIN_NAMESPACES.EIP155,
-        chainId: "11155111",
+        chainId: "0xaa36a7",
         rpcTarget: rpcUrl
       },
     });
