@@ -13,7 +13,7 @@ export default function RequestSBT (props: any) {
     const pKey = ethers.Wallet.createRandom().privateKey;
     const wallet: Wallet = new ethers.Wallet(
       pKey,
-      ethers.getDefaultProvider("goerli")
+      ethers.getDefaultProvider("sepolia")
       );
     
     setPrivateKey(pKey);
