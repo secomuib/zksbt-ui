@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { decryptWithPrivateKey } from '../../utils/crypto';
 import { Button, Form, Message } from 'semantic-ui-react';
 const { genProof } = require("@/utils/snarkjs");
-import { zksbt } from "@/utils/web3";
+import zksbt from "@/utils/web3";
 
 export default function GenerateZKP (props: any) {
   const [creditScore, setCreditScore] = useState('');
@@ -33,11 +33,17 @@ export default function GenerateZKP (props: any) {
   ];
 
   const readSBT = async () => {
-    const owner = await zksbt.ownerOf(props.tokenId);
+    const zksbtContract = await zksbt();
+
+    if (!zksbtContract) {
+      throw new Error("zksbtContract is null");
+    }
+
+    const owner = await zksbtContract.ownerOf(props.tokenId);
     setOwner(owner);
 
-    const storedRoot = await zksbt.getRoot(props.tokenId);
-    const encryptedData = await zksbt.getEncryptedData(props.tokenId);
+    const storedRoot = await zksbtContract.getRoot(props.tokenId);
+    const encryptedData = await zksbtContract.getEncryptedData(props.tokenId);
     setRoot(storedRoot);
     setEncryptedCreditScore(encryptedData[0]);
     setEncryptedIncome(encryptedData[1]);
